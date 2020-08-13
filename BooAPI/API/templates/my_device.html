@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+<style>
+	body{
+		background-color: white;
+	}
+
+	#device-info{
+		margin-top: 100px;
+		/*color:white;*/
+	}
+
+	#device-info-name{
+		border: 2px solid red;
+		border-radius: 5px;
+		font-size: 20px;
+		padding:8px;
+		padding-left: 20px;
+	}
+
+	#device-info-value{
+		padding:50px;
+		padding-left: 200px;
+		font-size: 50px;
+		color: blue;
+	}
+
+</style>
+
+
+{% if device is not none %}
+	
+<div class="container-fluid padding">
+	<div id="device-info" class="row">
+		<div class="col-md-6" id="device-info-name">
+			<p>
+				<strong style="font-size: 25px;">{{ device.name }}</strong><br>
+				<strong><mark>{{ device.device_id }}</mark></strong><br><br>
+				<em>{{ device.description }}</em><br><br>
+				<small>created on <u style="color:blue;">{{ str(device.date_created)[:-10] }}</u></small>
+			</p>
+		</div>
+		<div class="col-md-6" id="device-info-value">
+			<p style="border: 1px solid red;border-radius: 20px;text-align:center;">
+				{{ device.value }}
+			</p>
+		</div>
+	</div>
+
+	<!-- <div class="row">
+		<div class="col-sm-6">
+			<a class="btn btn-primary" role="button"> change device information </a>
+		</div>
+		<div class="col-sm-6">
+			<a class="btn btn-primary" role="button"> change value </a>
+		</div>
+	</div> -->
+
+</div>
+
+{% else %}
+
+	<h1 style="color:white;margin-top: 200px;"> This ID does not correspond to any device </h1>
+
+{% endif%}
+
+{% endblock %}

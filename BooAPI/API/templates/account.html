@@ -1,0 +1,160 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+<style>
+	h1{
+		text-align: center;
+	}
+
+	p{
+		font-size:20px;
+	}
+
+	code{
+		font-size:15px;
+	}
+
+	#code-snippet{
+		border:2px solid red;
+		border-radius: 5px;
+		padding: 5px;
+	}
+
+	#code-comment{
+		color:green;
+	}
+
+	#user-key{
+		margin-top: 20px;
+	}
+	
+
+</style>
+
+<div class="row">
+	<div class="col-sm-2">
+		<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+			<a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="true">Edit Profile</a>
+			<!-- <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a> -->
+			<a class="nav-link" id="v-pills-UserKey-tab" data-toggle="pill" href="#v-pills-UserKey" role="tab" aria-controls="v-pills-UserKey" aria-selected="false">API hints</a>
+			<!-- <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a> -->
+		</div>
+	</div>
+	<div class="col-sm-10">
+		<div class="tab-content" id="v-pills-tabContent">
+			<div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+				<h1> Edit Profile </h1>
+				<form style="margin-top: 30px;" method="POST">
+					{{ form.hidden_tag() }}
+					{{ form.csrf_token }}
+					<fieldset class="form-group">
+						<div class="form-group">
+							{{ form.username.label(class="form-control-label") }}
+							{% if form.username.errors %}
+								{{ form.username(class="form-control form-control-lg is-invalid",size=20) }}
+								<div class="invalid-feedback">
+									{% for error in form.username.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.username(class="form-control form-control-lg",size=20) }}
+							{% endif %}
+							<small class="form-text text-muted">A new username doesn't make changes to your user key <a style="color:red;font-size: 20px;">*</a></small>
+							<!-- {{ form.username(class="form-control form-control-lg",size=20) }} -->
+						</div>
+						<div class="form-group">
+							{{ form.email.label(class="form-control-label") }}
+							{% if form.email.errors %}
+								{{ form.email(class="form-control form-control-lg is-invalid",size=20) }}
+								<div class="invalid-feedback">
+									{% for error in form.email.errors %}
+										<span>{{ error }}</span>
+									{% endfor %}
+								</div>
+							{% else %}
+								{{ form.email(class="form-control form-control-lg",size=20) }}
+							{% endif %}
+							<!-- {{ form.email(class="form-control form-control-lg",size=20) }} -->
+						</div>
+						<!-- <div class="form-group">
+							<label for="accountUsername">Username</label>
+							<input type="text" class="form-control" id="accountUsername" aria-describedby="userHelp" value="{{ current_user.username }}">
+							<small id="userHelp" class="form-text text-muted">A new username doesn't make changes to your user key</small>
+						</div>
+						<div class="form-group">
+							<label for="accountEmail">Email</label>
+							<input type="email" class="form-control" id="accountEmail" value="{{ current_user.email }}">
+						</div> -->
+						<!-- <div class="form-check">
+							<input type="checkbox" class="form-check-input" id="exampleCheck1">
+							<label class="form-check-label" for="exampleCheck1">Check me out</label>
+						</div> -->
+						<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+						<!-- <a type="submit" class="btn btn-primary" role="button" style="color:white;">Submit</a> -->
+						<!-- <input type="submit" class="form-group submit" value="Submit"> -->
+					</fieldset>
+					<div class="form-group">
+						{{ form.submit(class="btn btn-info") }}
+					</div>
+				</form>
+			</div>
+			<!-- <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">Profile</div> -->
+			<div class="tab-pane fade" id="v-pills-UserKey" role="tabpanel" aria-labelledby="v-pills-UserKey-tab">
+				<h1> API hints </h1>
+				<hr>
+				<h3> User Key </h3>
+				<p>
+					Every user is given a unique identifier which allows him to access his devices from other applications. The key is a 20 character string just like the device id. This ensures the unlikelihood that another user access your devices. To get all your devices from the API, you can do as followed:<br>
+				</p>
+				<div id="code-snippet">
+					<code>
+						import requests<br><br>
+						endpoint = "/api/v1/devices/all/" + user_key <a id="code-comment"># url endpoint using the corresponding user key </a><br>
+						url = HOST+endpoint <a id="code-comment"># HOST corresponds to the domain name </a><br>
+						r = requests.get(url)<br>
+						r.json()<br>
+					</code>
+				</div>
+				<hr>
+				<p>
+					Accessing a specific device can also be done simply by specifying the user key and the device id. The following example shows how this can be achieved:
+				</p>
+				<div id="code-snippet">
+					<code>
+						import requests<br><br>
+						endpoint = "/api/v1/device/" + user_key + "/" + device_id <br>
+						url = HOST+endpoint <a id="code-comment"># HOST corresponds to the domain name </a><br>
+						r = requests.get(url)<br>
+						r.json()<br>
+					</code>
+				</div>
+				<hr>
+				<div id="user-key" class="row">
+					<div class="col-sm-12" style="text-align: center;">
+						<strong>Your key:</strong>
+						<input type="text" value="{{ key }}" id="input-key" disabled="true">
+					</div>
+				</div>
+
+				<!-- The button used to copy the text -->
+				<!-- <a class="btn btn-primary" role="button" href="{{ url_for('to_clipboard',TEXT=key) }}">copy</a> -->
+				<!-- <button class="btn btn-primary" onclick="getkey()">copy</button> -->
+				<hr>
+
+			</div>
+			<!-- <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">Settings</div> -->
+		</div>
+	</div>
+</div>
+
+<!-- <script>
+function getkey() {
+	var copyText = document.getElementById("input-key").value;
+	copyText.select();
+	copyText.setSelectionRange(0, 99999)
+	document.execCommand("copy");
+}
+</script> -->
+
+{% endblock %}

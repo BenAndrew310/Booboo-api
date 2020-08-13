@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+<style>
+	body{
+		background-image:url('../../static/Images/light_bulbs.jpg');
+		background-size: cover;
+	}
+</style>
+
+<div class="container-fluid" style="font-size:50px;color:white;margin-top:20px;text-align:center">
+	<h1>Device Successfully Created</h1>
+	<div class="container-fluid padding">
+		<p style="margin-top:120px; background-color: black;">Please take note of this device id:</p><br><p style="text-decoration: underline;"> <a href="{{ url_for('access_device',device_id=id) }}"> {{ id }} </a> </p>
+	</div>
+</div>
+
+{% endblock %}

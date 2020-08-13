@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% if refresh_on %}
+	    <meta http-equiv="refresh" content="5" >
+	{% endif %}
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='main.css') }}">
+
+	{% if title %}
+		<title>{{ title }}</title>
+	{% else %}
+		<title>BOOBOO API</title>
+	{% endif %}
+
+</head>
+<body> <!-- id="background-electronics"> -->
+
+	<nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-right">
+	<!--	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+	</button>-->
+		<!-- Links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('home') }}">Home</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ url_for('documentation') }}">Documentation</a>
+			</li>
+			{% if current_user.is_authenticated %}
+				<li>
+					<div class="dropdown">
+						<button type="button" style="color:blue;" class="btn dropdown-toggle" data-toggle="dropdown">
+						{{ current_user.username }}
+						</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="{{ url_for('manage_account',username=current_user.username) }}">Account</a>
+							<a class="dropdown-item" href="{{ url_for('devices') }}">Devices</a>
+							<a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a>
+						</div>
+					</div>
+				</li> 
+				<!-- <li class="nav-item">
+					<a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+				</li> -->
+			{% else %}
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('login') }}">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="{{ url_for('signup') }}">Register</a>
+				</li>
+			{% endif %}
+		</ul>
+		</div>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                </button>
+
+	</nav>
+
+	<div class="container">
+		<div style="text-align: center; background-color: #ADFF2F;">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+		  		{% if messages %}
+					{% for category, message in messages %}
+						<div class="alert alert-{{ category }}">{{ message }}</div>
+					{% endfor %}
+		  		{% endif %}
+			{% endwith %}
+		</div>
+		{% block body_content %} {% endblock %}
+	</div>
+<footer>
+        <div style="text-align:center;background-color:white;position:absolute;bottom:0;width:100%;">
+                2020 © All rights reserved
+        </div>
+</footer>
+
+
+	<!-- Optional JavaScript -->
+	<script src="{{url_for('static', filename='main.js')}}"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+</body>
+</html>

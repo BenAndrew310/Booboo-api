@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<style>
+	body{
+		background-image:url('../static/Images/light_bulbs.jpg');
+	}
+</style>
+
+<div id="registration">
+	<!-- {% with messages = get_flashed_messages(with_categories=true) %}
+  		{% if messages %}
+			{% for category, message in messages %}
+				<div class="alert alert-{{ category }}">{{ message }}</div>
+			{% endfor %}
+  		{% endif %}
+	{% endwith %} -->
+	<form method="POST"> <!-- action=""> -->
+		{{ form.hidden_tag() }}
+		{{ form.csrf_token }}
+		<fieldset class="form-group">
+			<legend style="color: white; text-align: center;" class="border-bottom mb-4">Login</legend>
+			<div style="color: white;" class="form-group">
+				{{ form.auth.label(class="form-control-label") }}
+				{% if form.auth.errors %}
+					{{ form.auth(class="form-control form-control-lg is-invalid",size=20) }}
+					<div class="invalid-feedback">
+						{% for error in form.auth.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.auth(class="form-control form-control-lg",size=20) }}
+				{% endif %}
+				<!-- {{ form.auth(class="form-control form-control-lg",size=20) }} -->
+			</div>
+			<div style="color: white;" class="form-group">
+				{{ form.password.label(class="form-control-label") }}
+				{% if form.password.errors %}
+					{{ form.password(class="form-control form-control-lg is-invalid",size=20) }}
+					<div class="invalid-feedback">
+						{% for error in form.password.errors %}
+							<span>{{ error }}</span>
+						{% endfor %}
+					</div>
+				{% else %}
+					{{ form.password(class="form-control form-control-lg",size=20) }}
+				{% endif %}
+				<!-- {{ form.password(class="form-control form-control-lg",size=20) }} -->
+			</div>
+			<div style="color: white;" class="form-check">
+				{{ form.remember(class="form-check-input") }}
+				{{ form.remember.label(class="form-check-label") }}
+			</div>
+		</fieldset>
+		<div class="form-group">
+			{{ form.submit(class="btn btn-info") }}
+		</div>
+		<small class="text-muted ml-2" style="color:white;text-align: center;"> Don't have an account yet. <a href="{{ url_for('signup') }}">Sign Up</a> </small>
+	</form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+<style>
+	body{
+		/*background-image:url('../../static/Images/light_bulbs.jpg');*/
+		background-color: black;
+	}
+
+	.table{
+		background-color: white;
+		color: black;
+		font-size: 25px;
+		margin-top: 40px;
+	}
+
+	#page-top{
+		margin-top: 20px;
+		color: white;
+	}
+
+</style>
+
+<div class="container">
+	<div id="page-top" class="row">
+		<div class="col-md-10 col-sm-12">
+			<h1 style="text-align:center;">Manage your devices<!-- {{ current_user.username }} --></h1>
+		</div>
+		<div class="col-md-2 col-sm-12">
+			<a class="btn btn-primary" role="button" href="{{ url_for('create_device') }}" style="margin-top: 20px;">New Device</a>
+		</div>
+	</div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Device Name</th>
+				<th>Value type</th>
+				<th>Date Created</th>
+				<th>Device ID</th>
+				<th></th>
+			</tr> 
+		</thead>
+		<tbody>
+			{% for device in devices %}
+				<tr>
+					<td>{{ device.name }}</td>
+					<td>{{ device.value_type }}</td>
+					<td>{{ str(device.date_created)[:11] }}</td>
+					<td><!-- <a href="{{ url_for('access_device',device_id=device.device_id) }}"> -->{{ device.device_id }}<!-- </a>  --></td>
+					<td>
+						<a class="btn btn-outline-primary" role="button" href="{{ url_for('access_device',device_id=device.device_id) }}">view</a> 
+						<!-- <button class="btn btn-outline-primary" onclick="ConfirmAction('Are you sure you want to delete this device?')">delete</button> -->
+						<a class="btn btn-outline-primary" role="button" href="{{ url_for('delete_device',device_id=device.device_id) }}">delete</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}

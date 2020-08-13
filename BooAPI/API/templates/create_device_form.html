@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body_content %}
+
+<style>
+	body{
+		background-image:url('../static/Images/light_bulbs.jpg');
+		background-size: cover;
+	}
+</style>
+<form method="POST"> <!-- action=""> -->
+	{{ form.hidden_tag() }}
+	{{ form.csrf_token }}
+	<fieldset class="form-group">
+		<legend style="color: white; text-align: center;" class="border-bottom mb-4">Create Device</legend>
+		<div style="color: white;" class="form-group">
+			{{ form.name.label(class="form-control-label") }}
+			{% if form.name.errors %}
+				{{ form.name(class="form-control form-control-lg is-invalid",size=20) }}
+				<div class="invalid-feedback">
+					{% for error in form.name.errors %}
+						<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{ form.name(class="form-control form-control-lg",size=20) }}
+			{% endif %}
+			<!-- {{ form.name(class="form-control form-control-lg",size=20) }} -->
+		</div>
+		<div style="color: white;" class="form-group">
+			{{ form.value.label(class="form-control-label") }}
+			{% if form.value.errors %}
+				{{ form.value(class="form-control form-control-lg is-invalid",size=20) }}
+				<div class="invalid-feedback">
+					{% for error in form.value.errors %}
+						<span>{{ error }}</span>
+					{% endfor %}
+				</div>
+			{% else %}
+				{{ form.value(class="form-control form-control-lg",size=20) }}
+			{% endif %}
+			<!-- {{ form.value(class="form-control form-control-lg",size=20) }} -->
+		</div>
+		<div style="color: white;" class="form-group">
+			{{ form.value_type.label(class="form-control-label") }}
+			{{ form.value_type(class="form-control form-control-xl",size=15,style="-webkit-appearance: menulist-button;height=20px;") }}
+		</div>
+		<div style="color: white;" class="form-group">
+			{{ form.description.label(class="form-control-label") }}
+			{{ form.description(class="form-control form-control-lg",size=20) }}
+		</div>
+	</fieldset>
+	<div class="form-group">
+		{{ form.submit(class="btn btn-info") }}
+	</div>
+</form>
+
+{% endblock %}

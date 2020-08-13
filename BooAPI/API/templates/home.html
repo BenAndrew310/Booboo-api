@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body_content %}
+<style>
+	body{
+		background-image: url('../static/Images/technology-computer.jpg');
+		/*background-image: url('../static/Images/metal_cubes.jpg');*/
+	}
+</style>
+<div id="home-page">
+	<div class="container-fluid text-center padding">
+		<h1 style="margin-bottom: 100px;margin-top: 50px;color:white;">BOOBOO API</h1>
+	</div>
+	<!-- <img src="../resources/technology-computer.jpg"> -->
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<div style="margin-bottom: 200px;" class="card">
+					<div class="card-body">
+						<h4 class="card-title">MY DEVICES</h4>
+						<p class="card-text">Access all your devices. Manage them and anlyze your data.<br></p>
+						<!-- <img src="../resources/technology-computer.jpg"> -->
+						<a href="{{ url_for('devices') }}" class="btn btn-primary">Start</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<div style="margin-bottom: 200px;" class="card">
+					<div class="card-body">
+						<h4 class="card-title">CREATE DEVICES</h4>
+						<p class="card-text">Create your devices and access them anytime on any device.</p>
+						<a href="{{ url_for('create_device') }}" class="btn btn-primary">Start</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
