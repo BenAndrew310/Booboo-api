@@ -43,7 +43,8 @@ def create_device():
 		except KeyError:
 			return redirect(url_for('create_device'))
 
-		return render_template("device_created.html",title="success",id=device["id"])
+		#return render_template("device_created.html",title="success",id=device["id"])
+		return redirect(url_for('devices'))
 
 	return render_template("create_device_form.html",title="new device",form=form)
 
